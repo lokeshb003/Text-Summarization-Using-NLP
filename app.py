@@ -46,7 +46,7 @@ def summarize():
     headers = {
         "Content-Type": "application/json"
     }
-    url = "https://hooks.slack.com/services/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"
+    url = "https://hooks.slack.com/services/WEBHOOK_URL"
 
     response = requests.post(url,headers=headers,json=json)
     return render_template('index.html', summary=summary)
