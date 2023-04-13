@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Text Summarization Using Natural Language Processing</title>
+  </head>
+  <body>
+    <h1>Text Summarization using NLP</h1>
+    <form method="post" action="{{ url_for('summarize') }}">
+      <textarea name="text" rows="10" cols="30"></textarea>
+      <br>
+      <input type="submit" value="Summarize">
+    </form>
+    {% if summary %}
+    <h2>Summary</h2>
+    <p>{{ summary }}</p>
+    {% endif %}
+   <h2>This Project is Done by Lokesh B</h2>
+   <a href="https://www.lokii.xyz">Check out my Resume Site( Lokesh B )</a> 
+  </body>
+</html>
