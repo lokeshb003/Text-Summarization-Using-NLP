@@ -13,13 +13,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy requirements.txt separately to leverage Docker caching
 COPY requirements.txt .
 
-# Create a virtual environment, install dependencies, and download NLTK data
+# Create a virtual environment, install dependencies
 RUN python3 -m venv venv && \
     /bin/bash -c "source venv/bin/activate && \
-    pip3 install --no-cache-dir -r requirements.txt && \
-    pip3 install --no-cache-dir nltk && \
-    python3 -c \"import nltk; nltk.download('punkt')\" && \
-    python3 -c \"import nltk; nltk.download('stopwords')\""
+    pip install --no-cache-dir -r requirements.txt"
 
 # Copy the rest of the application code
 COPY . .
@@ -28,4 +25,4 @@ COPY . .
 EXPOSE 8080
 
 # Command to run the application
-CMD ["python3", "app.py"]
+CMD ["python", "app.py"]
