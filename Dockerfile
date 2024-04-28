@@ -24,4 +24,4 @@ COPY . .
 EXPOSE 8080
 
 # Command to run the application
-CMD ["python3", "app.py"]
+CMD ["sh", "-c","sleep 10 && python3 app.py"]
