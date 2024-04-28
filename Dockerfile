@@ -19,6 +19,9 @@ ENV PATH="/app/venv/bin:$PATH"
 # Install dependencies within the virtual environment
 RUN pip install -r requirements.txt
 
+# Set NLTK_DATA environment variable
+ENV NLTK_DATA="/app/venv/nltk_data"
+
 # Copy application code
 COPY . .
 
