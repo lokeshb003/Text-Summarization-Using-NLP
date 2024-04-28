@@ -1,28 +1,26 @@
-# Use a lighter base image
-FROM python:3.9-slim
+FROM ubuntu:latest
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Update and install necessary packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    libc-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy requirements.txt separately to leverage Docker caching
+# Copy requirements file separately and install dependencies
 COPY requirements.txt .
+RUN pip3 install -r requirements.txt
 
-# Create a virtual environment, install dependencies
-RUN python3 -m venv venv && \
-    /bin/bash -c "source venv/bin/activate && \
-    pip install --no-cache-dir -r requirements.txt"
-
-# Copy the rest of the application code
+# Copy application code
 COPY . .
+
+# Download NLTK data
+RUN python3 -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
 
 # Expose port
 EXPOSE 8080
 
-# Command to run the application
-CMD ["python", "app.py"]
+# Run the application
+CMD ["python3", "app.py"]
