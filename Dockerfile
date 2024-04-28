@@ -9,12 +9,11 @@ RUN apt-get update && apt-get install -y python3 python3-pip python3-venv
 # Copy requirements.txt separately to leverage Docker caching
 COPY requirements.txt .
 
-# Create and activate a virtual environment
+# Create a virtual environment
 RUN python3 -m venv venv
-RUN /bin/bash -c "source venv/bin/activate"
 
-# Install Python dependencies within the virtual environment
-RUN pip3 install -r requirements.txt
+# Activate the virtual environment and install Python dependencies
+RUN /bin/bash -c "source venv/bin/activate && pip3 install -r requirements.txt"
 
 # Copy the rest of the application code
 COPY . .
