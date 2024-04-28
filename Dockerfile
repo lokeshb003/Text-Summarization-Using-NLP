@@ -1,17 +1,23 @@
 FROM ubuntu:latest
 
-# Install dependencies
+# Install Python and system dependencies
 RUN apt-get update && apt-get install -y \
     python3 \
-    python3-pip \
+    python3-venv \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Copy requirements file separately and install dependencies
+# Copy requirements file separately
 COPY requirements.txt .
-RUN pip3 install -r requirements.txt
+
+# Create a virtual environment and activate it
+RUN python3 -m venv venv
+ENV PATH="/app/venv/bin:$PATH"
+
+# Install dependencies within the virtual environment
+RUN pip install -r requirements.txt
 
 # Copy application code
 COPY . .
