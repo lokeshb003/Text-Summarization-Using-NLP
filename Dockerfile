@@ -26,8 +26,8 @@ ENV NLTK_DATA="/app/venv/nltk_data"
 COPY . .
 
 # Download NLTK data
-RUN python3 -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
-
+RUN python3 -c \"import nltk; nltk.download('punkt')\"
+RUN python3 -c \"import nltk; nltk.download('stopwords')\"
 # Expose port
 EXPOSE 8080
 
