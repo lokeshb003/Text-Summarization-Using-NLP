@@ -15,12 +15,15 @@ RUN python3 -m venv venv
 # Activate the virtual environment and install Python dependencies
 RUN /bin/bash -c "source venv/bin/activate && pip3 install -r requirements.txt"
 
+# Install NLTK
+RUN /bin/bash -c "source venv/bin/activate && pip3 install nltk"
+
 # Copy the rest of the application code
 COPY . .
 
 # Download NLTK data
-RUN python3 -c "import nltk; nltk.download('punkt')"
-RUN python3 -c "import nltk; nltk.download('stopwords')"
+RUN /bin/bash -c "source venv/bin/activate && python3 -c \"import nltk; nltk.download('punkt')\""
+RUN /bin/bash -c "source venv/bin/activate && python3 -c \"import nltk; nltk.download('stopwords')\""
 
 # Expose port
 EXPOSE 8080
