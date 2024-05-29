@@ -1,0 +1,30 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile -t lokeshb003/text-summarizer:latest
+  login:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: login to dockerhub registry
+      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASS
+  push:
+    needs: [build, login]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Push to dockerhub registry
+      run: docker push lokeshb003/text-summarizer:latest
