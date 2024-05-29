@@ -5,7 +5,9 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
+env:
+  DOCKER_USERNAME: lokeshb003
+  DOCKER_PASS: kepler22b
 jobs:
 
   build:
