@@ -1,6 +1,5 @@
 FROM ubuntu:latest
 WORKDIR .
-# Install Python and system dependencies
 RUN apt-get update && apt-get install -y python3 python3-pip python3.12-venv 
 COPY . .
 RUN python3 -m venv venv
