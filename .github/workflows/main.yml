@@ -1,16 +1,20 @@
 name: Sonarqube WF
-
+on:
+  push:
+    branches: [ "master" ]
 jobs:
   sonar:
-  - name: SonarScanner for .NET 5 with pull request decoration support
-    uses: highbyte/sonarscan-dotnet@2.0
+    runs-on: ubuntu-latest
+    steps:
+    - name: SonarScanner for .NET 5 with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@2.0
       with:
         # The key of the SonarQube project
         sonarProjectKey: text-summarizer
         # The name of the SonarQube project
-        sonarProjectName:  text-summarizer
+        sonarProjectName: text-summarizer
         # The SonarQube server URL. For SonarCloud, skip this setting.
-        sonarHostname:  http://20.106.208.220:9000
-  env:
-    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        sonarHostname: "http://20.106.208.220:9000"
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
