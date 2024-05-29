@@ -8,25 +8,19 @@ on:
 env:
   DOCKER_USERNAME: lokeshb003
   DOCKER_PASS: kepler22b
+
 jobs:
-
-  build:
-
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Build the Docker image
       run: docker build . --file Dockerfile -t lokeshb003/text-summarizer:latest
-  login:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: login to dockerhub registry
+
+    - name: Login to DockerHub
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASS
-  push:
-    needs: [build, login]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Push to dockerhub registry
+
+    - name: Push to DockerHub
       run: docker push lokeshb003/text-summarizer:latest
