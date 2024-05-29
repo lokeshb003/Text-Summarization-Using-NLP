@@ -8,8 +8,8 @@ on:
   pull_request:
     branches: [ "master" ]
 env:
-  DOCKER_USERNAME: lokeshb003
-  DOCKER_PASS: kepler22b
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
 
 jobs:
   build-and-push:
@@ -26,3 +26,12 @@ jobs:
 
     - name: Push to DockerHub
       run: docker push lokeshb003/text-summarizer:latest
+
+    - name: Notify on Success
+      if: success()
+      uses: rtCamp/action-slack-notify@v2
+      with:
+        status: 'Success'
+        fields: repo,message,commit,author,workflow,job,took
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
